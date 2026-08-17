@@ -1,0 +1,97 @@
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="bi" [ngClass]="isEditMode ? 'bi-pencil-square' : 'bi-plus-circle'"></i>
+                        {{isEditMode ? 'Edit Product' : 'Add New Product'}}
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <form [formGroup]="productFrom" (ngSubmit)="onSubmit()">
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Product Title *</label>
+                            <input type="text" class="form-control" id="title"
+                                placeholder="Enter product title" formControlName="title"
+                                [class.is-invalid]="F['title'].invalid && F['title'].touched">
+                            <div class="invalid-feedback" *ngIf="F['title'].invalid && F['title'].touched">
+                                <span *ngIf="F['title'].errors?.['required']">Title is required</span>
+                                <span *ngIf="F['title'].errors?.['minlength']">Title must be at least 3 characters</span>
+                            </div>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price ($) *</label>
+                            <input type="number" class="form-control" id="price" placeholder="Enter price"
+                                step="0.01" formControlName="price"
+                                [class.is-invalid]="F['price'].invalid && F['price'].touched">
+                            <div class="invalid-feedback" *ngIf="F['price'].invalid && F['price'].touched">
+                                <span *ngIf="F['price'].errors?.['required']">Price is required</span>
+                                <span *ngIf="F['price'].errors?.['min']">Price must be greater than 0</span>
+                            </div>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category *</label>
+                            <select class="form-select" id="category" name="category" formControlName="category"
+                                [class.is-invalid]="F['category'].invalid && F['category'].touched">
+                                <option value="">Select a category</option>
+                                <option *ngFor="let cat of categories" [value]="cat">{{cat}}</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="F['category'].invalid && F['category'].touched">
+                                Category is required
+                            </div>
+                        </div>
+
+                        <!-- Image URL -->
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image URL *</label>
+                            <input type="text" class="form-control" id="image" name="image"
+                                placeholder="https://example.com/image.jpg" formControlName="image"
+                                [class.is-invalid]="F['image'].invalid && F['image'].touched">
+                            <div class="invalid-feedback" *ngIf="F['image'].invalid && F['image'].touched">
+                                Image URL is required
+                            </div>
+                            <div class="mt-2" *ngIf="F['image'].value">
+                                <img [src]="F['image'].value" alt="preview" class="img-thumbnail" style="max-height: 150px;">
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description *</label>
+                            <textarea class="form-control" id="description" name="description" rows="4"
+                                placeholder="Enter product description" formControlName="description"
+                                [class.is-invalid]="F['description'].invalid && F['description'].touched"></textarea>
+                            <div class="invalid-feedback" *ngIf="F['description'].invalid && F['description'].touched">
+                                <span *ngIf="F['description'].errors?.['required']">Description is required</span>
+                                <span *ngIf="F['description'].errors?.['minlength']">Description must be at least 10 characters</span>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" class="btn btn-outline-secondary" (click)="cancel()" [disabled]="loading">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary" [disabled]="loading">
+                                <span *ngIf="!loading">
+                                    <i class="bi" [ngClass]="isEditMode ? 'bi-pencil-square' : 'bi-plus-circle'"></i>
+                                    {{isEditMode ? 'Edit Product' : 'Add New Product'}}
+                                </span>
+                                <span *ngIf="loading">
+                                    <span class="spinner-border spinner-border-sm me-2"></span>
+                                    {{isEditMode ? 'Updating ....' : 'Adding ...'}}
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

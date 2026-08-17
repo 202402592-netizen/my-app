@@ -1,0 +1,30 @@
+<div class="card h-100 border-0 shadow-sm product-card">
+    <div class="product-img-container">
+        <div class="card-img-top">
+            <img [src]="product.image" [alt]="product.title">
+        </div>
+    </div>
+    <div class="card-body">
+        <span class="badge bg-secondary mb-2">{{product.category}}</span>
+        <h6 class="card-title">{{product.title}}</h6>
+        <p class="card-text text-muted small">
+            {{product.description.substring(0,100)}}
+        </p>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <h5 class="text-primary mb-0">${{product.price}}</h5>
+            <div class="text-warning small">
+                <i class="bi bi-star-fill"></i> {{product.rating?.rate}}
+            </div>
+        </div>
+    </div>
+    <div class="card-footer bg-transparent border-0 p-3">
+        <div class="d-grid gap-2">
+            <button type="button" class="btn btn-primary" (click)="onAddToCart()">
+                <i class="bi bi-cart-plus"></i> أضف للسلة
+            </button>
+            <a [routerLink]="['/products',product.id]" class="btn btn-outline-primary">
+                <i class="bi bi-eye"></i> عرض التفاصيل
+            </a>
+        </div>
+    </div>
+</div>

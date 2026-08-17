@@ -1,0 +1,89 @@
+
+    <div class="container py-5">
+        <h1 class="display-5 fw-bold mb-4"><i class="bi bi-cart text-primary"></i> سلة المشتريات</h1>
+
+        <div class="text-center py-5" *ngIf="cart.items.length ===0" >
+           <i class="bi bi-cart-x display-1 text-muted"></i>
+           <h3>Your cart is empty</h3>
+           <div class="text-muted">start shopping to add items to your cart</div>
+           <a routerLink="/Products" class="btn btn-primary">
+           <i class="bi bi-shop"></i>continue shopping
+           </a>
+        </div>
+
+        <div class="row"*ngIf="cart.items.length > 0"  >
+            <div class="col-lg-8 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <!-- Cart Item 1 -->
+                        <div class="cart-item row align-items-center" *ngFor="let item of cart.items">
+                            <div class="col-md-2 mb-3 mb-md-0">
+                                <img [src]="item.product.image" class="img-fluid"
+                                    [alt]="item.product.title">
+                            </div>
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <h6 class="mb-1">{{item.product.title}}</h6>
+                                <small class="text-muted">{{item.product.category}}</small>
+                            </div>
+                            <div class="col-md-2 mb-3 mb-md-0">
+                                <h5 class="text-primary mb-0">{{item.product.price}}</h5>
+                            </div>
+                            <div class="col-md-2 mb-3 mb-md-0">
+                                <div class="input-group quantity-control">
+                                    <button class="btn btn-sm btn-outline-secondary" (click)="decreaseQuantity(item)"><i class="bi bi-dash" ></i></button>
+                                    <input type="text" class="form-control form-control-sm text-center" [value]="item.quantity"
+                                        readonly>
+                                    <button class="btn btn-sm btn-outline-secondary"(click)="increaseQuantity(item)"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <strong class="text-success">${{getItemTotal(item)}}</strong>
+                                <button class="btn btn-sm btn-danger" (click)="removeItem(item.product.id)"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+
+                    
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a routerLink="/Products" class="btn btn-outline-secondary"><i class="bi bi-arrow-right"></i>
+                                متابعة التسوق</a>
+                            <button class="btn btn-outline-danger" (click)="clearCart()">تفريغ السلة</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm sticky-top" style="top: 1rem;">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">ملخص الطلب</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>المجموع الفرعي:</span>
+                            <strong>${{cart.total.toFixed(2)}}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>الشحن:</span>
+                            <strong class="text-success">مجاني</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>الضريبة:</span>
+                            <strong>${{(cart.total *0.1).toFixed(2)}}</strong>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5>الإجمالي:</h5>
+                            <h5 class="text-primary">${{(cart.total *1.1).toFixed(2)}}</h5>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-lg" (click)="checkout()"><i class="bi bi-credit-card"></i> إتمام
+                                الطلب</button>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <small class="text-muted"><i class="bi bi-shield-check"></i> دفع آمن</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

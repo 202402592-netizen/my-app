@@ -1,0 +1,42 @@
+.product-image-container {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.product-image-container img {
+    max-height: 500px;
+    object-fit: contain;
+}
+
+.product-info {
+    animation: fadeInRight 0.5s ease-out;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.quantity-selector button {
+    width: 40px;
+}
+
+.breadcrumb-item a {
+    color: #0d6efd;
+}
+
+.breadcrumb-item a:hover {
+    color: #0a58ca;
+}
